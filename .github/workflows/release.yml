@@ -18,6 +18,16 @@ concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 
+env:
+  # Disable husky's git hooks for this workflow. semantic-release's git
+  # plugin commits CHANGELOG.md/package.json on our behalf, and that commit
+  # message (auto-generated, can include long footer lines/links) isn't
+  # bound by the same commitlint rules a human-authored commit is. CI
+  # already enforces lint/format/tests as their own jobs, so the local
+  # pre-commit/commit-msg hooks add no extra safety here — only friction.
+  # https://typicode.github.io/husky/how-to.html#ci-server-and-docker
+  HUSKY: "0"
+
 jobs:
   release:
     name: semantic-release
