@@ -1,0 +1,15 @@
+node_modules
+dist
+coverage
+.git
+.github
+.husky
+.vscode
+*.md
+!README.md
+.env
+.env.*
+test
+*.test.ts
+.eslintcache
+.nvmrc

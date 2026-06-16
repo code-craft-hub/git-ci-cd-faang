@@ -1,0 +1,38 @@
+name: Release
+
+# Runs after CI succeeds on main — never releases code that hasn't passed
+# the full quality gate. semantic-release then inspects conventional commits
+# since the last release to decide whether/how to bump the version.
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: [completed]
+
+permissions:
+  contents: write # to push the version-bump commit, CHANGELOG, and tag
+  issues: write # semantic-release comments on related issues
+  pull-requests: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: semantic-release
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+
+      - uses: ./.github/actions/setup-node-pnpm
+
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm exec semantic-release

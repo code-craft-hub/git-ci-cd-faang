@@ -1,0 +1,3 @@
+# Default owner for everything in the repo — required reviewer on all PRs
+# once "Require review from Code Owners" is enabled in branch protection.
+* @code-craft-hub

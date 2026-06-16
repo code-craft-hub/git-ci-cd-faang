@@ -1,0 +1,7 @@
+# Normalize line endings to LF regardless of contributor OS, so CI (Linux
+# runners) and local dev (this repo was bootstrapped on Windows) never
+# disagree about what changed.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
