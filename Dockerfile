@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------
 # Stage 1: base — shared OS layer + pinned pnpm
 # ---------------------------------------------------------------------------
-FROM node:22.12.0-alpine3.21 AS base
+FROM node:25.2.1-alpine3.21 AS base
 # Pin to a digest in production (see README) to make the build fully
 # reproducible and immune to upstream tag mutation. Tag pinned here for
 # readability; renovate/dependabot will keep this current.
@@ -46,7 +46,7 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 # ---------------------------------------------------------------------------
 # Stage 5: runtime — minimal, non-root, read-only-friendly final image
 # ---------------------------------------------------------------------------
-FROM node:22.12.0-alpine3.21 AS runtime
+FROM node:25.2.1-alpine3.21 AS runtime
 
 ENV NODE_ENV=production \
     PORT=3000 \
